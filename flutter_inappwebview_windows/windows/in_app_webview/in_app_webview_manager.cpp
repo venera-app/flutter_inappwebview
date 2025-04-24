@@ -18,7 +18,7 @@
 namespace flutter_inappwebview_plugin
 {
   InAppWebViewManager::InAppWebViewManager(const FlutterInappwebviewWindowsPlugin* plugin)
-    : plugin(plugin),
+    : plugin(plugin), graphics_context_(nullptr),
     ChannelDelegate(plugin->registrar->messenger(), InAppWebViewManager::METHOD_CHANNEL_NAME)
   {
     if (!rohelper_) {
@@ -255,6 +255,9 @@ namespace flutter_inappwebview_plugin
     webViews.clear();
     keepAliveWebViews.clear();
     windowWebViews.clear();
+    if (graphics_context_) {
+      graphics_context_.reset();
+    }
     UnregisterClass(windowClass_.lpszClassName, nullptr);
     plugin = nullptr;
   }
